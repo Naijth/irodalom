@@ -63,7 +63,11 @@ for (let i = 1; i < array.length; i++) { // for loop that increments for each by
     const td3 = document.createElement('td'); // creates the td3 variable and assigns it a td HTML element
     tr.appendChild(td3); // appends the td3 variable to the tr variable
     td3.innerHTML = array[i].love1; // changes the innerHTML of the td3 variable to the i'th variable
-    const td4 = document.createElement('td'); // creates the td4 variable and assigns it a td HTML element
-    tr.appendChild(td4); // appends the td4 variable to the tr variable
-    td4.innerHTML = array[i].love2; // changes the innerHTML of the td4 variable to the i'th variable
-}
+    if (array[i].love2 == undefined) {
+        td3.colspan = 2;
+    } else {
+        const td4 = document.createElement('td'); // creates the td4 variable and assigns it a td HTML element
+        tr.appendChild(td4); // appends the td4 variable to the tr variable
+        td4.innerHTML = array[i].love2; // changes the innerHTML of the td4 variable to the i'th variable
+    }
+}    
