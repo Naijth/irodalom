@@ -75,3 +75,6 @@ function renderTableBody(){ // creates the renderTableBody function
         }
     } 
 }
+
+renderTableHead();
+renderTableBody();
