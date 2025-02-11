@@ -104,8 +104,8 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
     if (name == ''){
         valid = false;
         const parentElement = nameElement.parentElement;
-        const error = parentElement.querySelectorAll('.error');
-        if (error == undefined) {
+        const error = parentElement.querySelector('.error');
+        if (error != undefined) {
             error.innerHTML = "A név megadása kötelező";
         }
     }
@@ -113,8 +113,8 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
     if (age == ''){
         valid = false;
         const parentElement = ageElement.parentElement;
-        const error = parentElement.querySelectorAll('.error');
-        if (error == undefined) {
+        const error = parentElement.querySelector('.error');
+        if (error != undefined) {
             error.innerHTML = "A korszak megadása kötelező";
         }
     }
@@ -122,8 +122,8 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
     if (love1 == ''){
         valid = false;
         const parentElement = love1Element.parentElement;
-        const error = parentElement.querySelectorAll('.error');
-        if (error == undefined) {
+        const error = parentElement.querySelector('.error');
+        if (error != undefined) {
             error.innerHTML = "Egy szerelem megadása kötelező";
         }
     }
