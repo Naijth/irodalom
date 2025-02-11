@@ -84,18 +84,60 @@ const form = document.getElementById('form') // creating a variable and putting 
 form.addEventListener('submit', function(e){ // adds an eventListener to the form
     e.preventDefault(); // prevents it from defaulting
 
-    const name = document.getElementById('kolto_nev').value; // sets the variable to the value of what is at the id
-    const age = document.getElementById('korszak').value; // sets the variable to the value of what is at the id
-    const love1 = document.getElementById('szerelem1').value; // sets the variable to the value of what is at the id
-    const love2 = document.getElementById('szerelem2').value; // sets the variable to the value of what is at the id
+    let valid = true; //true by default
+    const nameElement = document.getElementById('kolto_nev'); // sets the variable to what is at the id
+    const ageElement = document.getElementById('korszak'); // sets the variable to what is at the id
+    const love1Element = document.getElementById('szerelem1'); // sets the variable to what is at the id
+    const love2Element = document.getElementById('szerelem2'); // sets the variable to what is at the id
 
-    const newElement = { // creates a new thing we will put in the array
-        name: name, // name attribute becomes the name variable's content
-        age: age, // age attribute becomes the age variable's content
-        love1: love1, // love1 attribute becomes the love1 variable's content
-        love2: love2 // love2 attribute becomes the love2 variable's content
+    const name = nameElement.value;
+    const age = ageElement.value;
+    const love1 = love1Element.value;
+    const love2 = love2Element.value == "" ? undefined : love2Element.value;
+
+    const thisForm = e.currentTarget; // this contains the current form 
+    const error = thisForm.querySelectorAll('.error'); // this is everything with the error class
+    for(const errorElement of error){ // this goes through everything with the error class...
+        errorElement.innerHTML = ""; // and deletes it's contents
     }
-    array.push(newElement); // pushes the newElement to the array
-    tbody.innerHTML = ""; // cleans tbody from it's contents
-    renderTableBody(); // reruns the renderer with the new fancy and shiny content
+
+    if (name == ''){
+        valid = false;
+        const parentElement = nameElement.parentElement;
+        const error = parentElement.querySelectorAll('.error');
+        if (error == undefined) {
+            error.innerHTML = "A név megadása kötelező";
+        }
+    }
+
+    if (age == ''){
+        valid = false;
+        const parentElement = ageElement.parentElement;
+        const error = parentElement.querySelectorAll('.error');
+        if (error == undefined) {
+            error.innerHTML = "A korszak megadása kötelező";
+        }
+    }
+
+    if (love1 == ''){
+        valid = false;
+        const parentElement = love1Element.parentElement;
+        const error = parentElement.querySelectorAll('.error');
+        if (error == undefined) {
+            error.innerHTML = "Egy szerelem megadása kötelező";
+        }
+    }
+
+    if (valid == true){
+        const newElement = { // creates a new thing we will put in the array
+            name: name, // name attribute becomes the name variable's content
+            age: age, // age attribute becomes the age variable's content
+            love1: love1, // love1 attribute becomes the love1 variable's content
+            love2: love2 // love2 attribute becomes the love2 variable's content
+        }
+        array.push(newElement); // pushes the newElement to the array
+        tbody.innerHTML = ""; // cleans tbody from it's contents
+        renderTableBody(); // reruns the renderer with the new fancy and shiny content
+        form.reset(); // returns the form to it's riginal status
+    }
 })
