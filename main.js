@@ -90,10 +90,10 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
     const love1Element = document.getElementById('szerelem1'); // sets the variable to what is at the id
     const love2Element = document.getElementById('szerelem2'); // sets the variable to what is at the id
 
-    const name = nameElement.value;
-    const age = ageElement.value;
-    const love1 = love1Element.value;
-    const love2 = love2Element.value == "" ? undefined : love2Element.value;
+    const name = nameElement.value; // sets the variable to what the value of this element is
+    const age = ageElement.value; // sets the variable to what the value of this element is
+    const love1 = love1Element.value; // sets the variable to what the value of this element is
+    const love2 = love2Element.value == "" ? undefined : love2Element.value; // sets the variable to what the value of this element is, unless it is an empty string in which case it becomes undefined
 
     const thisForm = e.currentTarget; // this contains the current form 
     const error = thisForm.querySelectorAll('.error'); // this is everything with the error class
@@ -120,14 +120,14 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
 })
 
 function formValidator(inputElement){
-    let valid = true;
-    if (inputElement.value == ''){
-        valid = false;
-        const parentElement = inputElement.parentElement;
-        const error = parentElement.querySelector('.error');
-        if (error != undefined) {
-            error.innerHTML = "A mező megadása kötelező!";
+    let valid = true; // true by default
+    if (inputElement.value == ''){ // if the value of the input is empty
+        valid = false; // sets it to false
+        const parentElement = inputElement.parentElement; // grabs the parent element
+        const error = parentElement.querySelector('.error'); // picks out the first thing with the error group in the parent
+        if (error != undefined) { //if it is not undefined
+            error.innerHTML = "A mező megadása kötelező!"; // change it's innerhtml to this
         }
     }
-    return valid;
+    return valid; // return the value of valid
 }
