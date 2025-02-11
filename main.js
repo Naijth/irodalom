@@ -50,10 +50,10 @@ function renderTableHead(){
     th3.innerHTML = array[0].love1; // changes the innerHTML of the th3 variable to the stated variable
 }
 
-function renderTableBody(){ // creates the renderTableBody function
-    const tbody = document.createElement('tbody'); // creates the tbody variable and assigns it a tbody HTML element
-    table.appendChild(tbody); // appends the tbody variable to the table variable
+const tbody = document.createElement('tbody'); // creates the tbody variable and assigns it a tbody HTML element
+table.appendChild(tbody); // appends the tbody variable to the table variable
 
+function renderTableBody(){ // creates the renderTableBody function
     for (let i = 1; i < array.length; i++) { // for loop that increments for each by one, goes until i is smaller than the length of array
         const tr = document.createElement('tr'); // creates the tr variable and assigns it a tr HTML element
         tbody.appendChild(tr); // appends the tr variable to the tbody variable
@@ -76,5 +76,26 @@ function renderTableBody(){ // creates the renderTableBody function
     } 
 }
 
-renderTableHead();
-renderTableBody();
+renderTableHead(); // renders the table head
+renderTableBody(); //renders the table body
+
+const form = document.getElementById('form') // creating a variable and putting the htmlElements
+
+form.addEventListener('submit', function(e){ // adds an eventListener to the form
+    e.preventDefault(); // prevents it from defaulting
+
+    const name = document.getElementById('kolto_nev').value; // sets the variable to the value of what is at the id
+    const age = document.getElementById('korszak').value; // sets the variable to the value of what is at the id
+    const love1 = document.getElementById('szerelem1').value; // sets the variable to the value of what is at the id
+    const love2 = document.getElementById('szerelem2').value; // sets the variable to the value of what is at the id
+
+    const newElement = { // creates a new thing we will put in the array
+        name: name, // name attribute becomes the name variable's content
+        age: age, // age attribute becomes the age variable's content
+        love1: love1, // love1 attribute becomes the love1 variable's content
+        love2: love2 // love2 attribute becomes the love2 variable's content
+    }
+    array.push(newElement); // pushes the newElement to the array
+    tbody.innerHTML = ""; // cleans tbody from it's contents
+    renderTableBody(); // reruns the renderer with the new fancy and shiny content
+})
