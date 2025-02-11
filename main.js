@@ -101,32 +101,9 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
         errorElement.innerHTML = ""; // and deletes it's contents
     }
 
-    if (name == ''){
-        valid = false;
-        const parentElement = nameElement.parentElement;
-        const error = parentElement.querySelector('.error');
-        if (error != undefined) {
-            error.innerHTML = "A név megadása kötelező";
-        }
-    }
-
-    if (age == ''){
-        valid = false;
-        const parentElement = ageElement.parentElement;
-        const error = parentElement.querySelector('.error');
-        if (error != undefined) {
-            error.innerHTML = "A korszak megadása kötelező";
-        }
-    }
-
-    if (love1 == ''){
-        valid = false;
-        const parentElement = love1Element.parentElement;
-        const error = parentElement.querySelector('.error');
-        if (error != undefined) {
-            error.innerHTML = "Egy szerelem megadása kötelező";
-        }
-    }
+    valid = formValidator(nameElement);
+    valid = formValidator(ageElement);
+    valid = formValidator(love1Element);
 
     if (valid == true){
         const newElement = { // creates a new thing we will put in the array
@@ -141,3 +118,16 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
         form.reset(); // returns the form to it's riginal status
     }
 })
+
+function formValidator(inputElement){
+    let valid = true;
+    if (inputElement.value == ''){
+        valid = false;
+        const parentElement = inputElement.parentElement;
+        const error = parentElement.querySelector('.error');
+        if (error != undefined) {
+            error.innerHTML = "A mező megadása kötelező!";
+        }
+    }
+    return valid;
+}
