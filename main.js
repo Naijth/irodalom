@@ -67,7 +67,7 @@ function renderTableBody(){ // creates the renderTableBody function
         tr.appendChild(td3); // appends the td3 variable to the tr variable
         td3.innerHTML = array[i].love1; // changes the innerHTML of the td3 variable to the i'th variable
         if (array[i].love2 == undefined) { // checks if love2 is undefined
-            td3.colspan = 2; // if yes, td3's colspan is now 2
+            td3.colspan = "2"; // if yes, td3's colspan is now 2
         } else { // otherwise...
             const td4 = document.createElement('td'); // creates the td4 variable and assigns it a td HTML element
             tr.appendChild(td4); // appends the td4 variable to the tr variable
@@ -89,11 +89,13 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
     const ageElement = document.getElementById('korszak'); // sets the variable to what is at the id
     const love1Element = document.getElementById('szerelem1'); // sets the variable to what is at the id
     const love2Element = document.getElementById('szerelem2'); // sets the variable to what is at the id
+    const checkboxElement = document.getElementById('masodik'); // sets the variable to what is at the id
 
     const name = nameElement.value; // sets the variable to what the value of this element is
     const age = ageElement.value; // sets the variable to what the value of this element is
     const love1 = love1Element.value; // sets the variable to what the value of this element is
     const love2 = love2Element.value == "" ? undefined : love2Element.value; // sets the variable to what the value of this element is, unless it is an empty string in which case it becomes undefined
+    const checkbox = checkboxElement.checked; // true if checked, false if not
 
     const thisForm = e.currentTarget; // this contains the current form 
     const error = thisForm.querySelectorAll('.error'); // this is everything with the error class
@@ -101,12 +103,13 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
         errorElement.innerHTML = ""; // and deletes it's contents
     }
 
-    valid = formValidator(nameElement);
-    valid = formValidator(ageElement);
-    valid = formValidator(love1Element);
+    valid = formValidator(nameElement, "A mező megadása kötelező!");
+    valid = formValidator(ageElement, "A mező megadása kötelező!");
+    valid = formValidator(love1Element, "A mező megadása kötelező!");
 
-    if (valid == true){
-        const newElement = { // creates a new thing we will put in the array
+    if(checkbox && love2 != undefined){ // if checkbox is checked and love2 isn't undefined
+        if (valid == true){
+            const newElement = { // creates a new thing we will put in the array
             name: name, // name attribute becomes the name variable's content
             age: age, // age attribute becomes the age variable's content
             love1: love1, // love1 attribute becomes the love1 variable's content
@@ -116,17 +119,38 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
         tbody.innerHTML = ""; // cleans tbody from it's contents
         renderTableBody(); // reruns the renderer with the new fancy and shiny content
         form.reset(); // returns the form to it's riginal status
+        }  
+    } else if (!checkbox && love2 == undefined){ // if checkbox is unchecked and love2 is undefined
+        if (valid == true){
+            const newElement = { // creates a new thing we will put in the array
+            name: name, // name attribute becomes the name variable's content
+            age: age, // age attribute becomes the age variable's content
+            love1: love1, // love1 attribute becomes the love1 variable's content
+        }
+        array.push(newElement); // pushes the newElement to the array
+        tbody.innerHTML = ""; // cleans tbody from it's contents
+        renderTableBody(); // reruns the renderer with the new fancy and shiny content
+        form.reset(); // returns the form to it's riginal status
+        }
+    } else if (checkbox && love2 == undefined){ // if checkbox is checked and love2 is undefined
+        formValidator(love2Element, "A mező megadása kötelező, ha a checkbox be van jelölve!") // reuses formValidator to avoid repetition for same effect
+    } else { // else
+        const checkboxParent = checkboxElement.parentElement // picks out the first thing with the error group in the parent
+        const checkboxError = checkboxParent.querySelector('.error') // picks out the first thing with the error group in the parent
+        if (checkboxError != undefined) { //if it is not undefined
+            checkboxError.innerHTML = "A checkboxot ki kell pipálni a második szerelem megadásához!"; // change it's innerhtml to this
+        }
     }
-})
+});
 
-function formValidator(inputElement){
+function formValidator(inputElement, inputErrorMessage){
     let valid = true; // true by default
     if (inputElement.value == ''){ // if the value of the input is empty
         valid = false; // sets it to false
-        const parentElement = inputElement.parentElement; // grabs the parent element
+        const parentElement = inputElement.parentElement; // picks out the first thing with the error group in the parent
         const error = parentElement.querySelector('.error'); // picks out the first thing with the error group in the parent
         if (error != undefined) { //if it is not undefined
-            error.innerHTML = "A mező megadása kötelező!"; // change it's innerhtml to this
+            error.innerHTML = inputErrorMessage; // change it's innerhtml to this
         }
     }
     return valid; // return the value of valid
