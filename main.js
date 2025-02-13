@@ -36,9 +36,10 @@ table.appendChild(thead); // appends the thead variable to the table variable
 const tbody = document.createElement('tbody'); // creates the tbody variable and assigns it a tbody HTML element
 table.appendChild(tbody); // appends the tbody variable to the table variable
 
-function renderTable(){ // creates the renderTableBody function
+function renderTable(thead, tbody, array){ // creates the renderTableBody function
     for (let i = 0; i < array.length; i++) { // for loop that increments for each by one, goes until i is smaller than the length of array
         if (i == 0) {
+            thead.innerHTML = "";
             const trH = document.createElement('tr'); // creates the trH variable and assigns it a tr HTML element
             thead.appendChild(trH); // appends the trH variable to the thead variable
             const th1 = document.createElement('th'); // creates the th1 variable and assigns it a th HTML element
@@ -74,7 +75,7 @@ function renderTable(){ // creates the renderTableBody function
     } 
 }
 
-renderTable(); //renders the table body
+renderTable(thead, tbody, array); //renders the table body
 
 const form = document.getElementById('form') // creating a variable and putting the htmlElements
 
@@ -119,7 +120,7 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
         } 
         array.push(newElement); // pushes the newElement to the array
         tbody.innerHTML = ""; // cleans tbody from it's contents
-        renderTableBody(); // reruns the renderer with the new fancy and shiny content
+        renderTable(thead, tbody, array); // reruns the renderer with the new fancy and shiny content
         form.reset(); // returns the form to it's riginal status
     } else if (valid == true && has2Loves == true){
         const newElement = { // creates a new thing we will put in the array
@@ -130,7 +131,7 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
         }
         array.push(newElement); // pushes the newElement to the array
         tbody.innerHTML = ""; // cleans tbody from it's contents
-        renderTableBody(); // reruns the renderer with the new fancy and shiny content
+        renderTable(thead, tbody, array); // reruns the renderer with the new fancy and shiny content
         form.reset(); // returns the form to it's riginal status
     }
 });
