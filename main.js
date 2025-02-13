@@ -36,6 +36,9 @@ table.appendChild(thead); // appends the thead variable to the table variable
 const tbody = document.createElement('tbody'); // creates the tbody variable and assigns it a tbody HTML element
 table.appendChild(tbody); // appends the tbody variable to the table variable
 
+/**
+ * This beautiful babygirl renders the form for us using a different function to generate it's fields
+ */
 function renderForm(){
     const form = document.createElement('form');
     form.id = 'form';
@@ -53,8 +56,11 @@ function renderForm(){
     form.appendChild(button);
 }
 
-renderForm();
-
+/**
+ * So this guy right here has 3 inputs, which are very self explanatoiry. 
+ * It goes through the array it's given, and puts it into a very fancy and shiny table that we make beforehand.
+ * If it is the first member of the array it will be taken as the head, and used as such.
+ */
 function renderTable(thead, tbody, array){ // creates the renderTableBody function
     for (let i = 0; i < array.length; i++) { // for loop that increments for each by one, goes until i is smaller than the length of array
         if (i == 0) {
@@ -99,6 +105,10 @@ renderForm();
 
 const form = document.getElementById('form') // creating a variable and putting the htmlElements
 
+/**
+ * This is the add event listener of the form, which upon the button press adds 3 or 4 variables to the array,
+ * depending on wheter a checkbox is checked and text is given or not
+ */
 form.addEventListener('submit', function(e){ // adds an eventListener to the form
     e.preventDefault(); // prevents it from defaulting
 
@@ -156,6 +166,10 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
     }
 });
 
+/**
+ * This is the aforementioned "different function", which creates the fields for the form so I can avoid MASSIVE amounts of code repetition.
+ * It's inputs should be self explanatiory.
+ */
 function formField(form, type, labelText, id){
     const mainDiv = document.createElement('div');
     mainDiv.setAttribute('class', 'field'); 
@@ -183,6 +197,12 @@ function formField(form, type, labelText, id){
     mainDiv.appendChild(br3);
 }
 
+/**
+ * This hot stuff right here is used by the event listener to check if we have given all the necessary info
+ * for the form to be able to be added to the array.
+ * It's inputs should be self explanatiory.
+ * It returns a boolean.
+ */ 
 function formValidator(inputElement, inputErrorMessage){
     let valid = true; // true by default
     if (inputElement.value == ''){ // if the value of the input is empty
@@ -196,6 +216,12 @@ function formValidator(inputElement, inputErrorMessage){
     return valid; // return the value of valid
 }
 
+/**
+ * This is my babyboy right here. What he does is check if the checkbox is checked and the 2nd love field has anything in it or the exact opposite.
+ * If it doesn't it writes out an error message for the one that's doing something wrong and returns a false.
+ * If it does then we return a true.
+ * Obvsiously it returns a boolean. 
+ */
 function formComplexValidator(checkboxElement, love2Element){
     if (checkboxElement.checked && love2Element.value == ""){ // if checkbox is checked and love2 is undefined
         formValidator(love2Element, "A mező megadása kötelező, ha a checkbox be van jelölve!") // reuses formValidator to avoid repetition for same effect
