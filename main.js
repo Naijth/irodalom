@@ -36,6 +36,25 @@ table.appendChild(thead); // appends the thead variable to the table variable
 const tbody = document.createElement('tbody'); // creates the tbody variable and assigns it a tbody HTML element
 table.appendChild(tbody); // appends the tbody variable to the table variable
 
+function renderForm(){
+    const form = document.createElement('form');
+    form.id = 'form';
+    form.action = '';
+    document.body.appendChild(form);
+
+    formField(form, "text", "Költő neve:", "kolto_nev");
+    formField(form, "text", "Korszak:", "korszak");
+    formField(form, "text", "Szerelme:", "szerelem1");
+    formField(form, "checkbox", "Volt másik szerelme?", "masodik");
+    formField(form, "text", "Szerelme:", "szerelem2");
+
+    const button = document.createElement('button');
+    button.innerHTML = "Hozzáadás";
+    form.appendChild(button);
+}
+
+renderForm();
+
 function renderTable(thead, tbody, array){ // creates the renderTableBody function
     for (let i = 0; i < array.length; i++) { // for loop that increments for each by one, goes until i is smaller than the length of array
         if (i == 0) {
@@ -76,6 +95,7 @@ function renderTable(thead, tbody, array){ // creates the renderTableBody functi
 }
 
 renderTable(thead, tbody, array); //renders the table body
+renderForm();
 
 const form = document.getElementById('form') // creating a variable and putting the htmlElements
 
@@ -116,7 +136,7 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
         const newElement = { // creates a new thing we will put in the array
         name: name, // name attribute becomes the name variable's content
         age: age, // age attribute becomes the age variable's content
-        love1: love1, // love1 attribute becomes the love1 variable's content
+        love1: love1 // love1 attribute becomes the love1 variable's content
         } 
         array.push(newElement); // pushes the newElement to the array
         tbody.innerHTML = ""; // cleans tbody from it's contents
@@ -135,6 +155,33 @@ form.addEventListener('submit', function(e){ // adds an eventListener to the for
         form.reset(); // returns the form to it's riginal status
     }
 });
+
+function formField(form, type, labelText, id){
+    const mainDiv = document.createElement('div');
+    mainDiv.setAttribute('class', 'field'); 
+    form.appendChild(mainDiv);
+
+    const label = document.createElement('label');
+    label.for = id;
+    label.innerHTML = labelText;
+    mainDiv.appendChild(label);
+    const br1 = document.createElement('br');
+    mainDiv.appendChild(br1);
+
+    const input = document.createElement('input');
+    input.type = type;
+    input.id = id;
+    input.name = id;
+    mainDiv.appendChild(input);
+    const br2 = document.createElement('br');
+    mainDiv.appendChild(br2);
+
+    const errorDiv = document.createElement('div');
+    errorDiv.setAttribute('class', 'error'); 
+    mainDiv.appendChild(errorDiv);
+    const br3 = document.createElement('br');
+    mainDiv.appendChild(br3);
+}
 
 function formValidator(inputElement, inputErrorMessage){
     let valid = true; // true by default
